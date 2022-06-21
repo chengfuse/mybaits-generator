@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--1. 修改为本地maven的mysql-connector-java对应的jar包-->
+    <classPathEntry
+            location="D:\mavenRepository\mysql\mysql-connector-java\8.0.26\mysql-connector-java-8.0.26.jar"/>
+    <context id="MysqlTables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!--2. 使用自定义插件,生成实体类注解,指向上面定义的java类-->
+<!--        <commentGenerator type="test.test0412.config.MyCommentGenerator"/>-->
+        <!--默认-->
+        <plugin type="org.mybatis.generator.plugins.LombokPlugin">
+            <property name="hasLombok" value="true"/>
+        </plugin>
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--3. 修改数据库配置信息-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://121.42.224.90:3306/jiayun_cloud?&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true"
+                        userId="sun"
+                        password="tiger_sun_2016">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--4. 设置代码生成器生成的pojo的位置-->
+        <javaModelGenerator targetPackage="com.example.pojo"
+                            targetProject="src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--5、设置代码生成器生成的mapper的位置-->
+        <sqlMapGenerator targetPackage="mappers"
+                         targetProject="src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--6、设置代码生成器生成的dao的位置-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.example.dao"
+                             targetProject="src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--生成对应表及类名 -->
+        <table tableName="%" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+            <!--设置实体驼峰命名-->
+            <property name="useActualColumnNames" value="false" />
+            <!-- 需要插入时返回主键值，请将此属性打开，column值为主键的列明 -->
+            <generatedKey column="id" sqlStatement="MySql" identity="true"
+            />
+        </table>
+    </context>
+</generatorConfiguration>
